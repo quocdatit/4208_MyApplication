@@ -16,6 +16,10 @@ public class MyLogin extends JFrame {
     
     String correct_username = "admin";
     String correct_password = "admin";
+    String correct_acc[][] = {
+        {"admin", "admin"},
+        {"admin2", "123456"}
+    };
     
     public MyLogin() {
         // Panel: Title
@@ -74,24 +78,47 @@ public class MyLogin extends JFrame {
     }
     
     private void setListener() {
+        txt_Username.addKeyListener(new KeyListener(){
+            public void keyTyped(KeyEvent e){
+                
+            }
+            public void keyPressed(KeyEvent e){
+                switch (e.getKeyCode()){
+                    case KeyEvent.VK_ENTER:
+                        doLogin();
+                        break;
+                    case KeyEvent.VK_ESCAPE:
+                        System.exit(0);
+                        break;
+                }
+            }
+            public void keyReleased(KeyEvent e){
+                
+            }
+        });
+        
+        pwd_Password.addKeyListener(new KeyListener(){
+            public void keyTyped(KeyEvent e){
+                
+            }
+            public void keyPressed(KeyEvent e){
+                switch (e.getKeyCode()){
+                    case KeyEvent.VK_ENTER:
+                        doLogin();
+                        break;
+                    case KeyEvent.VK_ESCAPE:
+                        System.exit(0);
+                        break;
+                }
+            }
+            public void keyReleased(KeyEvent e){
+                
+            }
+        });
+        
         btn_Login.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (txt_Username.getText().equals("") || new String(pwd_Password.getPassword()).equals("")) {
-                    // Tạo 1 Dialog báo lỗi
-                    JOptionPane.showMessageDialog(MyLogin.this, "Tài khoản và Mật khẩu không được để trống.", "Lỗi đăng nhập", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                if (txt_Username.getText().equals(correct_username) && new String(pwd_Password.getPassword()).equals(correct_password)) {
-                    // Tạo 1 Dialog báo thành công
-                    JOptionPane.showMessageDialog(MyLogin.this, "Đăng nhập thành công.", "Thành công", JOptionPane.INFORMATION_MESSAGE);
-                    // Do something
-                    new MyControl(); // Chạy frame Chương trình chính
-                    MyLogin.this.dispose(); // Destroy frame Đăng nhập
-                } else {
-                    // Tạo 1 Dialog báo lỗi
-                    JOptionPane.showMessageDialog(MyLogin.this, "Tài khoản hoặc Mật khẩu không đúng.", "Lỗi đăng nhập", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
+                doLogin();
             }
         });
         
@@ -100,5 +127,32 @@ public class MyLogin extends JFrame {
                 System.exit(0);
             }
         });
+    }
+    
+    void doLogin(){
+        if (txt_Username.getText().equals("") || new String(pwd_Password.getPassword()).equals("")) {
+            // Tạo 1 Dialog báo lỗi
+            JOptionPane.showMessageDialog(MyLogin.this, "Tài khoản và Mật khẩu không được để trống.", "Lỗi đăng nhập", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        boolean errLogin = true;
+        for(String acc[]: correct_acc){
+            if (txt_Username.getText().equals(acc[0]) && new String(pwd_Password.getPassword()).equals(acc[1])) {
+                // Tạo 1 Dialog báo thành công
+                JOptionPane.showMessageDialog(MyLogin.this, "Đăng nhập thành công.", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+                // Do something
+                errLogin = false;
+                new MyControl(); // Chạy frame Chương trình chính
+                MyLogin.this.dispose(); // Destroy frame Đăng nhập
+                break;
+            } else {
+                // Tạo 1 Dialog báo lỗi
+                continue;
+            }
+        }
+        if(errLogin) {
+            JOptionPane.showMessageDialog(MyLogin.this, "Tài khoản hoặc Mật khẩu không đúng.", "Lỗi đăng nhập", JOptionPane.ERROR_MESSAGE);
+            return;
+        } 
     }
 }
