@@ -14,8 +14,6 @@ public class MyLogin extends JFrame {
     JButton btn_Login;
     JButton btn_Cancel;
     
-    String correct_username = "admin";
-    String correct_password = "admin";
     String correct_acc[][] = {
         {"admin", "admin"},
         {"admin2", "123456"}
