@@ -62,8 +62,9 @@ class MenuItemListener implements ActionListener {
             }
             if(this.getExtension(selectedFile.getAbsolutePath()).equals("mp3")){
                 try{
-                    JOptionPane.showMessageDialog(null, "Chức năng nghe mp3 chưa hoàn thiện. Hãy chọn file .wav để chạy tình nghe nhạc!", "Lỗi khởi chạy MP3", JOptionPane.INFORMATION_MESSAGE);
-                    return;
+//                    JOptionPane.showMessageDialog(null, "Chức năng nghe mp3 chưa hoàn thiện. Hãy chọn file .wav để chạy tình nghe nhạc!", "Lỗi khởi chạy MP3", JOptionPane.INFORMATION_MESSAGE);
+//                    return;
+                    new MyPlayer(selectedFile.getAbsolutePath());
                 } catch (Exception e) {
                     System.out.print(e);
                 }

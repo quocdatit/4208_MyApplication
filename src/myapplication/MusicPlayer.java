@@ -15,7 +15,6 @@ public class MusicPlayer extends JFrame{
     
     String fileMp3;
     Player p;
-    boolean stopPlayback = false;
     final JButton btn_Play = new JButton("Play");
     final JButton btn_Stop = new JButton("Stop");
     
@@ -31,7 +30,8 @@ public class MusicPlayer extends JFrame{
         this.add(btn_Stop);
         this.setTitle("Nghe nhạc");
         this.setVisible(true);
-        
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
         setListener();
     }
     
@@ -59,6 +59,24 @@ public class MusicPlayer extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 btn_Stop.setEnabled(false);
                 btn_Play.setEnabled(true);
+                try {
+                    stopAudio();
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null, "Chức năng nghe mp3 chưa hoàn thiện. Hãy chọn file .wav để chạy tình nghe nhạc!", "Lỗi khởi chạy MP3", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                } catch (NoPlayerException ex) {
+                    JOptionPane.showMessageDialog(null, "Chức năng nghe mp3 chưa hoàn thiện. Hãy chọn file .wav để chạy tình nghe nhạc!", "Lỗi khởi chạy MP3", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                } catch (CannotRealizeException ex) {
+                    JOptionPane.showMessageDialog(null, "Chức năng nghe mp3 chưa hoàn thiện. Hãy chọn file .wav để chạy tình nghe nhạc!", "Lỗi khởi chạy MP3", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
+            }
+        });
+        
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 try {
                     stopAudio();
                 } catch (IOException ex) {

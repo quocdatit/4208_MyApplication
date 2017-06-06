@@ -14,6 +14,7 @@ public final class ReadExcel extends JFrame {
         t.setEncoding("UTF-8");
         Workbook wb;
         wb = Workbook.getWorkbook(f, t);
+        
         Sheet s = wb.getSheet(0);
         int row = s.getRows();
         int col = s.getColumns();
