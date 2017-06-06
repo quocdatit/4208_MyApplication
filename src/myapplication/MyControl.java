@@ -2,7 +2,7 @@ package myapplication;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
+import java.io.*;
 import javax.swing.*;
 import static myapplication.MyControl.txt_PathToFile;
 
@@ -34,25 +34,3 @@ public class MyControl extends JFrame {
         setVisible(true);
     }
 }
-
-class MenuItemListener implements ActionListener {
-    public void actionPerformed(ActionEvent e) {            
-        switch (e.getActionCommand()) {
-            case "Open_Music":
-                showChooser();
-                break;
-            case "Open_Excel":
-                showChooser();
-                break;
-        }
-    }
-    
-    void showChooser() {
-        JFileChooser fileChooser = new JFileChooser();
-        int result = fileChooser.showOpenDialog(null);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-           txt_PathToFile.setText(selectedFile.getAbsolutePath());
-        }
-    }
- }

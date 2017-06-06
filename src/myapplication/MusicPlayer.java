@@ -4,23 +4,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
-import java.net.MalformedURLException;
-import javax.sound.sampled.*;
-import javax.media.Manager;
-import javax.media.Player;
-import java.net.URL;
+import javax.media.*;
+import java.net.*;
+import java.io.*;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.media.CannotRealizeException;
-import javax.media.NoPlayerException;
 
 public class MusicPlayer extends JFrame{
     
     String fileMp3;
-    File soundFile;
-    AudioFormat audioFormat;
-    AudioInputStream audioInputStream;
-    SourceDataLine sourceDataLine;
+    Player p;
     boolean stopPlayback = false;
     final JButton btn_Play = new JButton("Play");
     final JButton btn_Stop = new JButton("Stop");
@@ -35,6 +29,7 @@ public class MusicPlayer extends JFrame{
     
         this.add(btn_Play);
         this.add(btn_Stop);
+        this.setTitle("Nghe nhạc");
         this.setVisible(true);
         
         setListener();
@@ -48,6 +43,25 @@ public class MusicPlayer extends JFrame{
                 try {
                     playAudio();
                 } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null, "Chức năng nghe mp3 chưa hoàn thiện. Hãy chọn file .wav để chạy tình nghe nhạc!", "Lỗi khởi chạy MP3", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                } catch (NoPlayerException ex) {
+                    JOptionPane.showMessageDialog(null, "Chức năng nghe mp3 chưa hoàn thiện. Hãy chọn file .wav để chạy tình nghe nhạc!", "Lỗi khởi chạy MP3", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                } catch (CannotRealizeException ex) {
+                    JOptionPane.showMessageDialog(null, "Chức năng nghe mp3 chưa hoàn thiện. Hãy chọn file .wav để chạy tình nghe nhạc!", "Lỗi khởi chạy MP3", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
+            }
+        });
+        
+        btn_Stop.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                btn_Stop.setEnabled(false);
+                btn_Play.setEnabled(true);
+                try {
+                    stopAudio();
+                } catch (IOException ex) {
                     Logger.getLogger(MusicPlayer.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (NoPlayerException ex) {
                     Logger.getLogger(MusicPlayer.class.getName()).log(Level.SEVERE, null, ex);
@@ -56,17 +70,15 @@ public class MusicPlayer extends JFrame{
                 }
             }
         });
-        
-        btn_Stop.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                stopPlayback = true;
-            }
-        });
     }
     
     private void playAudio() throws MalformedURLException, IOException, NoPlayerException, CannotRealizeException {
-        URL media = new URL(this.fileMp3);
-        Player mediaPlayer = Manager.createRealizedPlayer(media);
-        mediaPlayer.start();
+        File f = new File(this.fileMp3);
+        this.p = Manager.createRealizedPlayer(f.toURI().toURL());
+        this.p.start();
+    }
+    
+    private void stopAudio() throws MalformedURLException, IOException, NoPlayerException, CannotRealizeException {
+        this.p.stop();
     }
 }
