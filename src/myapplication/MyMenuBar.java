@@ -3,6 +3,8 @@ package myapplication;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javazoom.jl.player.*;
+import java.io.*;
 
 public class MyMenuBar extends JMenuBar {
     
@@ -10,31 +12,24 @@ public class MyMenuBar extends JMenuBar {
         
         setBackground(Color.WHITE);
         
-        JMenu Menu_1 = new JMenu("Menu 1"); // 1
+        JMenu mn_File = new JMenu("File");
         
-        //
-        JMenu Menu_1_1 = new JMenu("Menu 1.1"); // 1.1
+        JMenu mn_Open = new JMenu("Open");
+        JMenuItem mn_Open_Music = new JMenuItem("Music");
+        mn_Open_Music.setActionCommand("Open_Music");
+        JMenuItem mn_Open_Excel = new JMenuItem("Excel");
+        mn_Open_Excel.setActionCommand("Open_Excel");
         
-        JMenuItem Menu_1_1_1 = new JMenuItem("Menu 1.1.1"); // 1.1.1
-        JMenuItem Menu_1_1_2 = new JMenuItem("Menu 1.1.2"); // 1.1.2
+        mn_Open.add(mn_Open_Music);
+        mn_Open.add(mn_Open_Excel);
         
-        Menu_1_1.add(Menu_1_1_1);
-        Menu_1_1.add(Menu_1_1_2);
+        mn_File.add(mn_Open);
         
-        //
-        JMenu Menu_1_2 = new JMenu("Menu 1.2"); // 1.2
+        MenuItemListener menuItemListener = new MenuItemListener();
         
-        JMenuItem Menu_1_2_1 = new JMenuItem("Menu 1.2.1"); // 1.2.1
-        JMenuItem Menu_1_2_2 = new JMenuItem("Menu 1.2.2"); // 1.2.2
+        mn_Open_Music.addActionListener(menuItemListener);
+        mn_Open_Excel.addActionListener(menuItemListener);
         
-        Menu_1_2.add(Menu_1_2_1);
-        Menu_1_2.add(Menu_1_2_2);
-        
-        //
-        Menu_1.add(Menu_1_1);
-        Menu_1.add(Menu_1_2);
-        
-        //
-        add(Menu_1);
+        add(mn_File);
     }
 }
